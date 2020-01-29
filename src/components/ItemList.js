@@ -3,10 +3,27 @@ import Item from './Item'
 import Pagination from './Pagination'
 
 const ItemList = props => {
+  if (props.error) {
+    return <p>{props.error}</p>
+  }
+
+  if (props.loading) {
+    return <p>Loading...</p>
+  }
+
+  if (props.items.length === 0) {
+    return <p>No results.</p>
+  }
+
+  const handleItemClick = id => props.onSelectedItem(id)
+
   return (
     <div>
-      ItemList
-      <Item />
+      {props.items.map(item => (
+        <div onClick={() => handleItemClick(item.id)} key={item.id}>
+          <Item {...item} />
+        </div>
+      ))}
       <Pagination />
     </div>
   )
