@@ -1,5 +1,18 @@
 import React, {useState, useEffect} from 'react'
 import {searchMoviesById} from '../api'
+import styled from '@emotion/styled'
+
+const StyledItemDetails = styled.div`
+  .label {
+    font-weight: bold;
+  }
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-gap: 20px;
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+`
 
 const ItemDetails = props => {
   const {id = ''} = props
@@ -21,7 +34,9 @@ const ItemDetails = props => {
         setMovie(null)
       }
     }
-    fetchData()
+    if (id !== '') {
+      fetchData()
+    }
   }, [id])
 
   if (error) {
@@ -44,19 +59,32 @@ const ItemDetails = props => {
       Poster: poster,
     } = movie
     return (
-      <div>
+      <StyledItemDetails>
         <div>
+          <h3>{title}</h3>
           <p>{genre}</p>
           <p>Movie plot - {plot}</p>
-          <p>Language: {language}</p>
-          <p>Diretor: {director}</p>
-          <p>Actors: {actors}</p>
-          <p>Duration: {duration}</p>
+          <p>
+            <span className="label">Language: </span>
+            {language}
+          </p>
+          <p>
+            <span className="label">Diretor: </span>
+            {director}
+          </p>
+          <p>
+            <span className="label">Actors: </span>
+            {actors}
+          </p>
+          <p>
+            <span className="label">Duration: </span>
+            {duration}
+          </p>
         </div>
         <div>
           <img src={poster} alt={title} />
         </div>
-      </div>
+      </StyledItemDetails>
     )
   }
 

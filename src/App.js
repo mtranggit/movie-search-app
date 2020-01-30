@@ -2,24 +2,34 @@ import React, {useState, useEffect} from 'react'
 import Search from './components/Search'
 import ItemList from './components/ItemList'
 import ItemDetails from './components/ItemDetails'
-import Header from './components/Header'
-import Footer from './components/Footer'
 import useDebounce from './utils/useDebounce'
 
 import styled from '@emotion/styled'
 import {searchMoviesByTitle} from './api'
 
-const Container = styled.div`
+const Wrapper = styled.div`
+  .sidebar {
+    grid-area: sidebar;
+  }
+  .content {
+    grid-area: content;
+    border-left: 1px solid lightgrey;
+    padding: 20px;
+    @media (max-width: 600px) {
+      border-left: none;
+    }
+  }
   display: grid;
-  grid-template-rows: 22% auto 22%;
-  grid-gap: 1rem;
-  padding: 1rem;
-`
-
-const SearchContainer = styled.div`
-  display: grid;
-  grid-template-columns: 300px 1fr;
-  grid-gap: 1rem;
+  grid-gap: 20px;
+  margin: 20px auto;
+  padding: 20px;
+  grid-template-columns: 300px auto;
+  grid-template-areas: 'sidebar content';
+  @media (max-width: 600px) {
+    grid-template-areas:
+      'sidebar'
+      'content';
+  }
 `
 
 function App() {
@@ -77,34 +87,33 @@ function App() {
   }, [currentPage, debounceSearchTerm])
 
   return (
-    <Container>
-      {/* <Header />` */}
-      <SearchContainer>
-        <div className="content-side">
-          <Search onChange={handleSearchTermChange} value={searchTerm} />
+    <Wrapper>
+      <div className="sidebar">
+        <Search onChange={handleSearchTermChange} value={searchTerm} />
 
-          {error && <p>{error}</p>}
+        {error && <p>{error}</p>}
 
-          {loading && <p>Loading, please wait...</p>}
+        {loading && <p>Loading, please wait...</p>}
 
-          {!error && debounceSearchTerm && items && (
-            <ItemList
-              loading={loading}
-              items={items}
-              page={currentPage}
-              total={total}
-              onSelectedItem={handleSelectedItem}
-              onPagination={handlePagination}
-            />
-          )}
+        {!error && debounceSearchTerm && items && (
+          <ItemList
+            loading={loading}
+            items={items}
+            page={currentPage}
+            total={total}
+            onSelectedItem={handleSelectedItem}
+            selectedItemId={selectedItemId}
+            onPagination={handlePagination}
+          />
+        )}
+      </div>
+
+      {selectedItemId && (
+        <div className="content">
+          <ItemDetails id={selectedItemId} />
         </div>
-
-        <div className="content-main">
-          {selectedItemId && <ItemDetails id={selectedItemId} />}
-        </div>
-      </SearchContainer>
-      {/* <Footer /> */}
-    </Container>
+      )}
+    </Wrapper>
   )
 }
 

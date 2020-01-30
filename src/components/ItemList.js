@@ -3,7 +3,9 @@ import Item from './Item'
 import Pagination from './Pagination'
 
 const ItemList = props => {
-  const handleItemClick = id => props.onSelectedItem(id)
+  const handleItemClick = id => {
+    props.onSelectedItem(id)
+  }
 
   if (!props.items || props.items.length === 0) {
     return null
@@ -16,7 +18,7 @@ const ItemList = props => {
           onClick={() => handleItemClick(item.imdbID)}
           key={`item-${item.imdbID}-${index}`}
         >
-          <Item {...item} />
+          <Item {...item} selected={props.selectedItemId === item.imdbID} />
         </div>
       ))}
       <Pagination
