@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react'
+import styled from '@emotion/styled'
 import Search from './components/Search'
 import ItemList from './components/ItemList'
 import ItemDetails from './components/ItemDetails'
 import useDebounce from './utils/useDebounce'
 
-import styled from '@emotion/styled'
 import {searchMoviesByTitle} from './api'
 
 const Wrapper = styled.div`

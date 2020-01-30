@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
-import {searchMoviesById} from '../api'
 import styled from '@emotion/styled'
+import {searchMoviesById} from '../api'
 
 const StyledItemDetails = styled.div`
   .label {

@@ -10,8 +10,6 @@ export const searchMoviesByTitle = async (search, page) => {
       `${API}&s=${encodeURIComponent(search)}&page=${encodeURIComponent(page)}`,
     )
 
-    console.log('result ', result)
-
     return {
       ...result.data,
       page: currentPage,
