@@ -97,7 +97,6 @@ function FilteredMovies() {
 
         {!error && debounceSearchTerm && items && (
           <ItemList
-            loading={loading}
             items={items}
             page={currentPage}
             total={total}
